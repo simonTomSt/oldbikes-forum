@@ -10,6 +10,6 @@ class HomeController extends Controller
 {
     public function home(): void
     {
-        $this->render('home.php');
+        $this->render('home');
     }
 }

@@ -12,7 +12,7 @@ class View
         $bodyPath = $layout ? Application::resolveFilePath("templates/layouts/{$layout}") : $pagePath;
         ob_start();
 
-        include_once Application::resolveFilePath("templates/layouts/root.php");
+        include_once Application::resolveFilePath("templates/layouts/root");
 
         return ob_get_clean();
     }

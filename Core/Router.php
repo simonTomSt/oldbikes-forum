@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Core;
 
+use App\Core\Exception\NotFoundException;
+
 class Router
 {
     private readonly Request $request;
@@ -32,16 +34,13 @@ class Router
 
 
         if (!isset($controller)) {
-            echo 'Not found';
-            exit();
+            throw new NotFoundException();
         }
 
         [$class, $function] = $controller;
 
         $action = fn() => (new $class)->{$function}();
-        
+
         $action();
     }
-
-
 }

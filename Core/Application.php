@@ -36,6 +36,6 @@ class Application
 
     public static function resolveFilePath($path): string
     {
-        return self::$ROOT_PATH . "{$path}";
+        return self::$ROOT_PATH . "{$path}.php";
     }
 }
