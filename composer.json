@@ -1,0 +1,18 @@
+{
+  "name": "simon/oldbikes-forum",
+  "autoload": {
+    "psr-4": {
+      "App\\": "./"
+    },
+    "files": [
+      "Core/utils/debug.php"
+    ]
+  },
+  "authors": [
+    {
+      "name": "simonTomSt",
+      "email": "simontomst.github@gmail.com"
+    }
+  ],
+  "require": {}
+}
