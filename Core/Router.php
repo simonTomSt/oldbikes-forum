@@ -41,6 +41,10 @@ class Router
 
         $action = fn() => (new $class)->{$function}();
 
+        foreach ($this->middlewares as $middleware) {
+            $action = fn() => (new $middleware)->process($action);
+        }
+
         $action();
     }
 }

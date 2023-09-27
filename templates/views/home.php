@@ -11,6 +11,6 @@
             riders from around the world. Don't miss out on the excitement – join us now and let the adventure
             begin!
         </p>
-        <a href="/login" class="btn btn-primary">Sure I love old motorbikes!</a>
+        <a href="/sign-in" class="btn btn-primary">Sure I love old motorbikes!</a>
     </div>
 </div>

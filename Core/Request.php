@@ -27,7 +27,7 @@ class Request
         }
 
         $path = trim($path, '/');
-        $path = "/{$path}/";
+        $path = "/{$path}";
 
         return preg_replace('#/{2,}#', '/', $path);
     }

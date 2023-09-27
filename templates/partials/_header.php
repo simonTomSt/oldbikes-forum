@@ -2,6 +2,6 @@
     <div class="container">
         <a class="navbar-brand">OldBikes</a>
 
-        <a href="/login" class="btn btn-dark">Sign In</a>
+        <a href="/sign-in" class="btn btn-dark">Sign In</a>
     </div>
 </nav>
