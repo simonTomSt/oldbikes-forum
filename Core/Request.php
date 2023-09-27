@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Core;
+
+class Request
+{
+    public function getPath(): string
+    {
+        $path = $_SERVER['REQUEST_URI'] ?? '/404';
+
+        return $this->normalizePath($path);
+    }
+
+    public function getMethod(): string
+    {
+        return strtoupper($_SERVER['REQUEST_METHOD']);
+    }
+
+    private function normalizePath(string $path): string
+    {
+        $position = strpos($path, '?');
+
+        if ($position !== false) {
+            $path = substr($path, 0, $position);
+        }
+
+        $path = trim($path, '/');
+        $path = "/{$path}/";
+
+        return preg_replace('#/{2,}#', '/', $path);
+    }
+}
