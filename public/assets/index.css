@@ -1,0 +1,8 @@
+main {
+    min-height: calc(100vh - 100px);
+    padding: 16px 0;
+}
+
+footer {
+    height: 44px;
+}

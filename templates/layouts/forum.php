@@ -1,4 +1,6 @@
 <main>
     FORUM
-    <?php include_once $pagePath ?>
+    <?php include_once
+        /** @var string $pagePath */
+    $pagePath ?>
 </main>

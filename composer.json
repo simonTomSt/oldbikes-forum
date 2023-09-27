@@ -5,7 +5,8 @@
       "App\\": "./"
     },
     "files": [
-      "Core/utils/debug.php"
+      "Core/utils/debug.php",
+      "utils/functions.php"
     ]
   },
   "authors": [
