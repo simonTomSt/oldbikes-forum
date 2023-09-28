@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Core;
 
+use App\Core\Exception\NotFoundException;
+
 class Application
 {
     public static string $ROOT_PATH;
@@ -16,22 +18,29 @@ class Application
         self::$ROOT_PATH = $config['rootPath'];
 
         $this->request = new Request();
-        $this->router = new Router($this->request);
+        $this->router = new Router($this->request, $config['globalMiddlewares']);
     }
 
     public function run(): void
     {
-        $this->router->resolve();
+        try {
+            $this->router->resolve();
+        } catch (NotFoundException) {
+            echo View::renderView('_404');
+        } catch (\Exception $e) {
+            debug($e);
+            echo View::renderView('_500');
+        }
     }
 
-    public function get(string $path, array $controller): void
+    public function get(string $path, array $controller, array $middlewares = []): void
     {
-        $this->router->setRoute('GET', $path, $controller);
+        $this->router->setRoute('GET', $path, $controller, $middlewares);
     }
 
-    public function post(string $path, array $controller): void
+    public function post(string $path, array $controller, array $middlewares = []): void
     {
-        $this->router->setRoute('POST', $path, $controller);
+        $this->router->setRoute('POST', $path, $controller, $middlewares);
     }
 
     public static function resolveFilePath($path): string
