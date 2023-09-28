@@ -5,7 +5,7 @@
       "App\\": "./"
     },
     "files": [
-      "Core/utils/debug.php",
+      "Core/utils/functions.php",
       "utils/functions.php"
     ]
   },
