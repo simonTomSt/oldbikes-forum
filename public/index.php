@@ -5,18 +5,31 @@ declare(strict_types=1);
 use App\Config\Paths;
 use App\Controllers\{AuthController, HomeController};
 use App\Core\Application;
+use App\Middlewares\{FlashMiddleware, SessionMiddleware, ValidateBodyMiddleware, ValidationExceptionMiddleware};
+use App\Models\{SignInModel, SignUpModel};
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $config = [
     'rootPath' => PATHS::ROOT,
+    'globalMiddlewares' => [
+        FlashMiddleware::class,
+        SessionMiddleware::class,
+        ValidationExceptionMiddleware::class,
+    ]
 ];
 
 $app = new Application($config);
 
-
+// Home Page
 $app->get('/', [HomeController::class, 'home']);
+
+// Auth
 $app->get('/sign-in', [AuthController::class, 'viewSignIn']);
+$app->post('/sign-in', [AuthController::class, 'signIn'], [ValidateBodyMiddleware::with(SignUpModel::class)]);
 $app->get('/sign-up', [AuthController::class, 'viewSignUp']);
+$app->post('/sign-up', [AuthController::class, 'signUp'], [ValidateBodyMiddleware::with(SignInModel::class)]);
+
+//
 
 $app->run();

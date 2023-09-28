@@ -8,13 +8,23 @@ use App\Core\Controller;
 
 class AuthController extends Controller
 {
-    public function viewSignIn()
+    public function viewSignIn(): void
     {
         $this->render('sign-in', [], 'auth');
     }
 
-    public function viewSignUp()
+    public function viewSignUp(): void
     {
         $this->render('sign-up', [], 'auth');
+    }
+
+    public function signIn(): void
+    {
+        echo $_POST['login'];
+    }
+
+    public function signUp(): void
+    {
+        echo $_POST['login'];
     }
 }
