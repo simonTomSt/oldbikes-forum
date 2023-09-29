@@ -2,7 +2,7 @@
 
 namespace App\Core;
 
-class Model
+class DtoModel
 {
     const RULE_REQUIRED = 'required';
     const RULE_EMAIL = 'email';

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Middlewares;
 
+use App\Core\DtoModel;
 use App\Core\Interfaces\MiddlewareInterface;
-use App\Core\Model;
 use App\Exceptions\ValidationException;
 
 
 readonly class ValidateBodyMiddleware implements MiddlewareInterface
 {
-    public function __construct(private Model $model)
+    public function __construct(private DtoModel $model)
     {
     }
 

@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Core;
 
 use App\Core\Exception\NotFoundException;
+use Framework\Database;
 
 class Application
 {
     public static string $ROOT_PATH;
+    public static Database $database;
 
     private readonly Router $router;
     private readonly Request $request;
@@ -16,6 +18,7 @@ class Application
     public function __construct(array $config)
     {
         self::$ROOT_PATH = $config['rootPath'];
+        self::$database = new Database($config['db']);
 
         $this->request = new Request();
         $this->router = new Router($this->request, $config['globalMiddlewares']);
