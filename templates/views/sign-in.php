@@ -8,12 +8,30 @@
                 <div class="card-body">
                     <form action="/sign-in" method="POST">
                         <div class="mb-3">
-                            <label for="login" class="form-label">Login</label>
-                            <input type="text" class="form-control" id="login" name="login" required>
+                            <?php
+                            /** @var array $globalParams */
+                            generateInputField([
+                                "label" => "Username",
+                                "name" => "username",
+                                "type" => "text",
+                                "required" => true,
+                                "value" => $globalParams['storedFormData']['username'],
+                                "errorMessage" => $globalParams['errors']['username'],
+                            ]);
+                            ?>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
+                            <?php
+                            /** @var array $globalParams */
+                            generateInputField([
+                                "label" => "Password",
+                                "name" => "password",
+                                "type" => "password",
+                                "required" => true,
+                                "value" => $globalParams['storedFormData']['password'],
+                                "errorMessage" => $globalParams['errors']['password'],
+                            ]);
+                            ?>
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Sign In</button>

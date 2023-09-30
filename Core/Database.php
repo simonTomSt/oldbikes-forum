@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Framework;
+namespace App\Core;
 
 use PDO;
 use PDOException;
@@ -20,7 +20,7 @@ class Database
         $dsn = $dbConfig['dsn'];
         $username = $dbConfig['username'];
         $password = $dbConfig['password'];
-
+        
         try {
             $this->connection = new PDO($dsn, $username, $password, [
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC

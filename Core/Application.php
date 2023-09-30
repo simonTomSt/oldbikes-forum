@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Core;
 
 use App\Core\Exception\NotFoundException;
-use Framework\Database;
 
 class Application
 {
@@ -21,7 +20,7 @@ class Application
         self::$database = new Database($config['db']);
 
         $this->request = new Request();
-        $this->router = new Router($this->request, $config['globalMiddlewares']);
+        $this->router = new Router($this->request);
     }
 
     public function run(): void
@@ -49,5 +48,10 @@ class Application
     public static function resolveFilePath($path): string
     {
         return self::$ROOT_PATH . "{$path}.php";
+    }
+
+    public function registerGlobalMiddleware(mixed $middleware)
+    {
+        $this->router->registerGlobalMiddleware($middleware);
     }
 }

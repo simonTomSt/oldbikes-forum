@@ -12,7 +12,7 @@ class SignInDtoModel extends DtoModel
     public function rules(): array
     {
         return [
-            'login' => [self::RULE_REQUIRED],
+            'username' => [self::RULE_REQUIRED],
             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 6]],
         ];
     }

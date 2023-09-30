@@ -9,20 +9,24 @@ use App\Core\Exception\NotFoundException;
 class Router
 {
     private readonly Request $request;
-    private readonly array $globalMiddlewares;
+    private array $globalMiddlewares = [];
     protected array $routes = [];
 
 
-    public function __construct(Request $request, array $globalMiddlewares = [])
+    public function __construct(Request $request)
     {
         $this->request = $request;
-        $this->globalMiddlewares = $globalMiddlewares;
     }
 
     public function setRoute(string $methodType, string $path, array $controller, array $middlewares = []): void
     {
         $this->routes[$methodType][$path]['controller'] = $controller;
         $this->routes[$methodType][$path]['middlewares'] = $middlewares;
+    }
+
+    public function registerGlobalMiddleware(mixed $middleware)
+    {
+        $this->globalMiddlewares[] = $middleware;
     }
 
     public function resolve(): void

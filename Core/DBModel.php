@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Core;
 
-use Framework\Database;
-
 abstract class DBModel
 {
     protected readonly Database $db;
