@@ -50,7 +50,7 @@ class Application
         return self::$ROOT_PATH . "{$path}.php";
     }
 
-    public function registerGlobalMiddleware(mixed $middleware)
+    public function registerGlobalMiddleware(mixed $middleware): void
     {
         $this->router->registerGlobalMiddleware($middleware);
     }
