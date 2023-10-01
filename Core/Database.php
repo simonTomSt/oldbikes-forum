@@ -20,12 +20,12 @@ class Database
         $dsn = $dbConfig['dsn'];
         $username = $dbConfig['username'];
         $password = $dbConfig['password'];
-        
+
         try {
             $this->connection = new PDO($dsn, $username, $password, [
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             ]);
-        } catch (PDOException) {
+        } catch (PDOException $e) {
             die("Unable to connect to database");
         }
     }
@@ -47,5 +47,10 @@ class Database
     public function findAll(): false|array
     {
         return $this->stmt->fetchAll();
+    }
+
+    public function findLastCreatedId(): false|array
+    {
+        return $this->connection->lastInsertId();
     }
 }
