@@ -26,7 +26,7 @@ class DtoModel
             self::RULE_MIN => 'Min length of this field must be {min}',
             self::RULE_MAX => 'Max length of this field must be {max}',
             self::RULE_MATCH => 'This field must be the same as {match}',
-            self::RULE_UNIQUE => 'Record with with this {field} already exists',
+            self::RULE_UNIQUE => 'Record with with this field already exists',
         ];
     }
 
@@ -57,6 +57,18 @@ class DtoModel
                 }
                 if ($fieldRule === self::RULE_MATCH && $fieldValue !== $this->{$fieldRule['match']}) {
                     $this->addError($fieldName, self::RULE_MATCH, ['match' => $fieldRule['match']]);
+                }
+                if ($ruleName === self::RULE_UNIQUE) {
+                    $tableName = $fieldRule['tableName'];
+                    $db = Application::$database;
+
+                    $query = "SELECT * FROM $tableName WHERE $fieldName = :$fieldName";
+                    $params = [$fieldName => $fieldValue];
+                    $record = $db->query($query, $params)->findOne();
+
+                    if ($record) {
+                        $this->addError($fieldName, self::RULE_UNIQUE);
+                    }
                 }
             }
         }

@@ -12,10 +12,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $config = new AppConfiguration();
 
-// Create new app
+// New app
 $app = new Application($config->getConfig());
 
-// Register global middlewares
+// Global middlewares
 $app->registerGlobalMiddleware(FlashMiddleware::class);
 $app->registerGlobalMiddleware(SessionMiddleware::class);
 $app->registerGlobalMiddleware(ValidationExceptionMiddleware::class);
@@ -25,9 +25,9 @@ $app->get('/', [HomeController::class, 'home']);
 
 // Auth
 $app->get('/sign-in', [AuthController::class, 'viewSignIn']);
-$app->post('/sign-in', [AuthController::class, 'signIn'], [ValidateBodyMiddleware::with(SignUpDtoModel::class)]);
+$app->post('/sign-in', [AuthController::class, 'signIn'], [ValidateBodyMiddleware::with(SignInDtoModel::class)]);
 $app->get('/sign-up', [AuthController::class, 'viewSignUp']);
-$app->post('/sign-up', [AuthController::class, 'signUp'], [ValidateBodyMiddleware::with(SignInDtoModel::class)]);
+$app->post('/sign-up', [AuthController::class, 'signUp'], [ValidateBodyMiddleware::with(SignUpDtoModel::class)]);
 
-// Run application
+// Run
 $app->run();

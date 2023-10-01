@@ -11,10 +11,10 @@ class SignUpDtoModel extends DtoModel
     public function rules(): array
     {
         return [
-            'username' => [self::RULE_REQUIRED],
-            'email' => [self::RULE_REQUIRED, self::RULE_EMAIL],
+            'username' => [self::RULE_REQUIRED, [self::RULE_UNIQUE, 'tableName' => 'users']],
+            'email' => [self::RULE_REQUIRED, self::RULE_EMAIL, [self::RULE_UNIQUE, 'tableName' => 'users']],
             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 6]],
-            'passwordConfirm' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']],
+            'confirmPassword' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']],
         ];
     }
 }
