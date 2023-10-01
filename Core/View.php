@@ -10,7 +10,7 @@ class View
     {
         $params = array_map(fn(mixed $param): string => htmlspecialchars((string)$param), $additionalData);
         $globalParams = self::$globalParams;
-        
+
         $pagePath = Application::resolveFilePath("templates/views/{$view}");
         $bodyPath = $layout ? Application::resolveFilePath("templates/layouts/{$layout}") : $pagePath;
 
@@ -24,5 +24,10 @@ class View
     public static function addGlobalParam(string $key, mixed $value): void
     {
         self::$globalParams[$key] = $value;
+    }
+
+    public static function removeGlobalParam(string $key): void
+    {
+        unset(self::$globalParams[$key]);
     }
 }

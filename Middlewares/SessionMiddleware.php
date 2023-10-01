@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace App\Middlewares;
 
 use App\Core\Interfaces\MiddlewareInterface;
+use App\Core\Session;
+use App\Core\View;
 use App\Exceptions\SessionException;
 
 class SessionMiddleware implements MiddlewareInterface
 {
     public function process(callable $next): void
     {
-        if (session_status() === PHP_SESSION_ACTIVE) {
+        if (Session::isActive()) {
             throw new SessionException("Session already active.");
         }
 
@@ -19,16 +21,18 @@ class SessionMiddleware implements MiddlewareInterface
             throw new SessionException("Headers already sent. Consider enabling output buffering. Data outputted from {$filename} - Line: {$line}");
         }
 
-        session_set_cookie_params([
+        Session::start([
             'secure' => $_ENV['APP_ENV'] === "production",
             'httponly' => true,
             'samesite' => 'lax'
         ]);
 
-        session_start();
+        View::addGlobalParam('session', Session::getSession());
 
         $next();
 
-        session_write_close();
+        Session::close();
+        View::removeGlobalParam('session');
+
     }
 }

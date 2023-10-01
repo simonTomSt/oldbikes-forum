@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Middlewares;
 
 use App\Core\Interfaces\MiddlewareInterface;
+use App\Core\Session;
 use App\Exceptions\ValidationException;
 
 class ValidationExceptionMiddleware implements MiddlewareInterface
@@ -16,8 +17,8 @@ class ValidationExceptionMiddleware implements MiddlewareInterface
         } catch (ValidationException $e) {
             $storedFormData = $_POST;
 
-            $_SESSION['errors'] = $e->errors;
-            $_SESSION['storedFormData'] = $storedFormData;
+            Session::set('errors', $e->errors);
+            Session::set('storedFormData', $storedFormData);
 
             $referer = $_SERVER['HTTP_REFERER'];
             redirectTo($referer);

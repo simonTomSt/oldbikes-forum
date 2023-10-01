@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Core\DBModel;
+use App\Core\Session;
 use App\Exceptions\ValidationException;
 
 class UserModel extends DBModel
@@ -21,9 +22,8 @@ class UserModel extends DBModel
 
         $this->create($userData);
 
-        session_regenerate_id();
-
-        $_SESSION['user'] = $this->db->findLastCreatedId();
+        Session::regenerate();
+        Session::set('user', $this->db->findLastCreatedId());
     }
 
 
@@ -40,8 +40,13 @@ class UserModel extends DBModel
             throw new ValidationException(['password' => 'Invalid credentials']);
         }
 
-        session_regenerate_id();
+        Session::regenerate();
+        Session::set('user', $user['id']);
+    }
 
-        $_SESSION['user'] = $user['id'];
+    public function signUserOut(): void
+    {
+        Session::remove('user');
+        Session::regenerate();
     }
 }
