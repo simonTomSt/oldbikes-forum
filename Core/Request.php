@@ -31,4 +31,13 @@ class Request
 
         return preg_replace('#/{2,}#', '/', $path);
     }
+
+    public function getBody(): ?array
+    {
+        if ($this->getMethod() === 'GET') {
+            return null;
+        }
+
+        return $_POST;
+    }
 }

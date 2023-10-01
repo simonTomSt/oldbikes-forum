@@ -5,9 +5,18 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Core\Controller;
+use App\Core\Request;
+use App\Models\UserModel;
 
 class AuthController extends Controller
 {
+    private readonly UserModel $userModel;
+
+    public function __construct()
+    {
+        $this->userModel = new UserModel();
+    }
+
     public function viewSignIn(): void
     {
         $this->render('sign-in', [], 'auth');
@@ -18,13 +27,22 @@ class AuthController extends Controller
         $this->render('sign-up', [], 'auth');
     }
 
-    public function signIn(): void
+    public function signIn(Request $req): void
     {
-        echo $_POST['login'];
+        $formData = $req->getBody();
+
+        $this->userModel->singUserIn($formData);
+        redirectTo('/forum');
     }
 
-    public function signUp(): void
+    public function signUp(Request $req): void
     {
-        echo $_POST['login'];
+        $formData = $req->getBody();
+
+        unset($formData['confirmPassword']);
+
+        $this->userModel->createUser($formData);
+
+        redirectTo('/forum');
     }
 }

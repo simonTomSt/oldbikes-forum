@@ -24,7 +24,7 @@ class Router
         $this->routes[$methodType][$path]['middlewares'] = $middlewares;
     }
 
-    public function registerGlobalMiddleware(mixed $middleware)
+    public function registerGlobalMiddleware(mixed $middleware): void
     {
         $this->globalMiddlewares[] = $middleware;
     }
@@ -42,7 +42,7 @@ class Router
 
         [$class, $function] = $controller;
 
-        $action = fn() => (new $class)->{$function}();
+        $action = fn() => (new $class)->{$function}($this->request);
 
         foreach ([...$middlewares, ...$this->globalMiddlewares] as $middleware) {
             $middlewareInstance = is_object($middleware) ? $middleware : (new $middleware);
