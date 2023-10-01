@@ -32,7 +32,7 @@ class AuthController extends Controller
         $formData = $req->getBody();
 
         $this->userModel->singUserIn($formData);
-        redirectTo('/forum');
+        redirectTo('/posts');
     }
 
     public function signUp(Request $req): void
@@ -44,5 +44,12 @@ class AuthController extends Controller
         $this->userModel->createUser($formData);
 
         redirectTo('/forum');
+    }
+
+    public function singOut(): void
+    {
+        $this->userModel->signUserOut();
+
+        redirectTo('/sign-in');
     }
 }
