@@ -43,7 +43,7 @@ class AuthController extends Controller
 
         $this->userModel->createUser($formData);
 
-        redirectTo('/forum');
+        redirectTo('/posts');
     }
 
     public function singOut(): void

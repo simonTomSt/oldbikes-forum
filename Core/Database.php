@@ -49,10 +49,11 @@ class Database
         return $this->stmt->fetchAll();
     }
 
-    public function findLastCreatedId(): false|array
+    public function id(): false|string
     {
         return $this->connection->lastInsertId();
     }
+
 
     public function getColumn(): mixed
     {

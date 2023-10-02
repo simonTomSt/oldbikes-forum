@@ -22,8 +22,9 @@ class UserModel extends DBModel
 
         $this->create($userData);
 
+
         Session::regenerate();
-        Session::set('user', $this->db->findLastCreatedId());
+        Session::set('user', $this->db->id());
     }
 
 
