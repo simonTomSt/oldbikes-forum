@@ -26,6 +26,7 @@ class Application
     public function run(): void
     {
         try {
+            View::addGlobalParam('currentRoute', $this->request->getPath());
             $this->router->resolve();
         } catch (NotFoundException) {
             echo View::renderView('_404');
