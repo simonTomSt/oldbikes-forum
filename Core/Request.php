@@ -6,6 +6,9 @@ namespace App\Core;
 
 class Request
 {
+    private array $routeParams = [];
+
+
     public function getPath(): string
     {
         $path = $_SERVER['REQUEST_URI'] ?? '/404';
@@ -41,14 +44,29 @@ class Request
         return $_POST;
     }
 
-    public function getUrlParams(): array
+    public function getQuery(): array
     {
-        $params = [];
+        $query = [];
 
         if (isset($_SERVER['QUERY_STRING'])) {
             parse_str($_SERVER['QUERY_STRING'], $params);
         }
 
-        return $params;
+        return $query;
+    }
+
+    public function getUrlParams(): array
+    {
+        return $this->routeParams;
+    }
+
+    public function getUrl()
+    {
+        return $_SERVER['REQUEST_URI'] ?? '/404';
+    }
+
+    public function setUrlParams(array $routeParams): void
+    {
+        $this->routeParams = $routeParams;
     }
 }

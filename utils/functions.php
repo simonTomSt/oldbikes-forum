@@ -61,5 +61,3 @@ function generatePagination(int $totalCount, string $baseUrl, int $currentOffset
 
     echo '</ul></nav>';
 }
-
-

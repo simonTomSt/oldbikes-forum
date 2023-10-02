@@ -10,7 +10,7 @@ class Router
 {
     private readonly Request $request;
     private array $globalMiddlewares = [];
-    protected array $routes = [];
+    private array $routes = [];
 
 
     public function __construct(Request $request)
@@ -31,10 +31,15 @@ class Router
 
     public function resolve(): void
     {
-        $path = $this->request->getPath();
-        $method = $this->request->getMethod();
-        $controller = $this->routes[$method][$path]['controller'];
-        $middlewares = $this->routes[$method][$path]['middlewares'];
+        $route = $this->matchRoute();
+
+        if (!$route) {
+            throw new NotFoundException();
+        }
+
+        $controller = $route['controller'];
+        $middlewares = $route['middlewares'];
+
 
         if (!isset($controller)) {
             throw new NotFoundException();
@@ -51,4 +56,29 @@ class Router
 
         $action();
     }
+
+    function matchRoute()
+    {
+        $method = $this->request->getMethod();
+        $url = $this->request->getUrl();
+        $routes = $this->routes[$method] ?? [];
+
+        foreach ($routes as $routeName => $route) {
+            // Use named capturing group to capture the parameter value
+            $pattern = preg_replace('#\{([a-z]+)\}#', '(?P<$1>[^/]+)', $routeName);
+            $pattern = "@^" . $pattern . "$@D";
+
+            if (preg_match($pattern, $url, $matches)) {
+                // Extract named captures as parameters
+                $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+
+                $this->request->setUrlParams($params);
+
+                return $route;
+            }
+        }
+
+        return false;
+    }
+
 }
