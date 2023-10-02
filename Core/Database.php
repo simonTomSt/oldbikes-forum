@@ -53,4 +53,9 @@ class Database
     {
         return $this->connection->lastInsertId();
     }
+
+    public function getColumn(): mixed
+    {
+        return $this->stmt->fetchColumn();
+    }
 }

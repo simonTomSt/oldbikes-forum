@@ -35,16 +35,20 @@ class PostsController extends Controller
 
     public function viewPosts(Request $req): void
     {
-        $posts = $this->getPostsForView($req);
+        $this->getPostsForView($req);
 
-        $this->render('posts', ['posts' => $posts], 'forum');
+        $pageParams = $this->getPostsForView($req);
+
+        $this->render('posts', $pageParams, 'forum');
     }
 
     public function viewUserPosts(Request $req): void
     {
-        $posts = $this->getPostsForView($req, true);
+        $this->getPostsForView($req, true);
 
-        $this->render('posts', ['posts' => $posts], 'forum');
+        $pageParams = $this->getPostsForView($req, true);
+
+        $this->render('posts', $pageParams, 'forum');
     }
 
     private function getPostsForView(Request $req, bool $userPosts = false): array
@@ -54,6 +58,15 @@ class PostsController extends Controller
         $limit = $urlParams['limit'] ?? 25;
         $offset = $urlParams['offset'] ?? 0;
 
-        return $this->postModel->findMany($userPosts ? ['author_id' => $userId] : [], '*', $limit, $offset);
+        $posts = $this->postModel->findMany($userPosts ? ['author_id' => $userId] : [], '*', $limit, $offset);
+        $totalCount = $this->postModel->getCount($userPosts ? ['author_id' => $userId] : []);
+
+        return [
+            'posts' => $posts,
+            'totalCount' => $totalCount,
+            'offset' => $offset,
+            'limit' => $limit,
+            'baseUrl' => $userPosts ? '/my-posts' : '/posts',
+        ];
     }
 }

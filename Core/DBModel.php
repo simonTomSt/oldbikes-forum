@@ -45,6 +45,26 @@ abstract class DBModel
         return $result->findAll();
     }
 
+    public function getCount(array $conditions = []): int
+    {
+        $where = '';
+        if (!empty($conditions)) {
+            $where = 'WHERE ';
+            $conditionsList = [];
+            foreach ($conditions as $key => $value) {
+                $conditionsList[] = "$key = :$key";
+            }
+            $where .= implode(' AND ', $conditionsList);
+        }
+
+        // Query to get the total count
+        $countQuery = "SELECT COUNT(*) AS total FROM $this->tableName $where";
+
+        $result = $this->db->query($countQuery, $conditions);
+
+        return $result->getColumn();
+    }
+
     public function findOne($conditions = [], $fields = '*'): mixed
     {
         $fieldList = is_array($fields) ? implode(', ', $fields) : $fields;
