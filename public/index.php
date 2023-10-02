@@ -39,6 +39,7 @@ $app->get('/posts', [PostsController::class, 'viewPosts'], [AuthRequiredMiddlewa
 $app->get('/create-post', [PostsController::class, 'viewCreatePost'], [AuthRequiredMiddleware::class]);
 $app->post('/create-post', [PostsController::class, 'createPost'], [AuthRequiredMiddleware::class]);
 $app->get('/my-posts', [PostsController::class, 'viewUserPosts'], [AuthRequiredMiddleware::class]);
+$app->get('/posts/{id}', [PostsController::class, 'viewSinglePost'], [AuthRequiredMiddleware::class]);
 
 // Run
 $app->run();
