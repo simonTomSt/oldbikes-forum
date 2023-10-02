@@ -77,7 +77,7 @@ class PostsController extends Controller
         $limit = $query['limit'] ?? 25;
         $offset = $query['offset'] ?? 0;
 
-        $posts = $this->postModel->findMany($userPosts ? ['author_id' => $userId] : [], '*', $limit, $offset);
+        $posts = $this->postModel->findMany($userPosts ? ['author_id' => $userId] : [], '*', $limit, $offset, 'created_at DESC');
         $totalCount = $this->postModel->getCount($userPosts ? ['author_id' => $userId] : []);
 
         return [

@@ -24,7 +24,7 @@ abstract class DBModel
     }
 
 
-    public function findMany($conditions = [], $fields = '*', $limit = 25, $offset = 0): false|array
+    public function findMany($conditions = [], $fields = '*', $limit = 25, $offset = 0, $orderBy = 'id ASC'): false|array
     {
         $fieldList = is_array($fields) ? implode(', ', $fields) : $fields;
 
@@ -38,12 +38,13 @@ abstract class DBModel
             $where .= implode(' AND ', $conditionsList);
         }
 
-        $query = "SELECT $fieldList FROM $this->tableName $where LIMIT $limit OFFSET $offset";
+        $query = "SELECT $fieldList FROM $this->tableName $where ORDER BY $orderBy LIMIT $limit OFFSET $offset";
 
         $result = $this->db->query($query, $conditions);
 
         return $result->findAll();
     }
+
 
     public function getCount(array $conditions = []): int
     {
