@@ -8,7 +8,7 @@ class View
 
     public static function renderView(string $view, array $additionalData = [], string $layout = null): false|string
     {
-        $params = array_map(fn(mixed $param): string => htmlspecialchars((string)$param), $additionalData);
+        $params = $additionalData;
         $globalParams = self::$globalParams;
 
         $pagePath = Application::resolveFilePath("templates/views/{$view}");

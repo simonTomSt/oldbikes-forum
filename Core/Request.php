@@ -40,4 +40,15 @@ class Request
 
         return $_POST;
     }
+
+    public function getUrlParams(): array
+    {
+        $params = [];
+
+        if (isset($_SERVER['QUERY_STRING'])) {
+            parse_str($_SERVER['QUERY_STRING'], $params);
+        }
+
+        return $params;
+    }
 }
