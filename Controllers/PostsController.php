@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Core\{Controller, Request, Session};
-use App\Models\{PostModel, UserModel};
+use App\Core\{Controller, Exception\NotFoundException, Request, Session};
+use App\Models\{CommentModel, PostModel, UserModel};
 
 class PostsController extends Controller
 {
     private readonly PostModel $postModel;
     private UserModel $userModel;
+    private CommentModel $commentModel;
 
     public function __construct()
     {
         $this->postModel = new PostModel();
         $this->userModel = new UserModel();
+        $this->commentModel = new CommentModel();
     }
 
     public function viewCreatePost(): void
@@ -54,13 +56,16 @@ class PostsController extends Controller
     public function viewSinglePost(Request $req): void
     {
         $urlParams = $req->getUrlParams();
-
         $postId = $urlParams['id'];
-
         $post = $this->postModel->findById($postId);
-        $author = $this->userModel->findById($post['author_id']);
 
-        $pageParams = ['post' => $post, 'author' => $author['username']];
+        if (empty($post)) {
+            throw new NotFoundException();
+        }
+
+        $author = $this->userModel->findById($post['author_id']);
+        $comments = $this->commentModel->getCommentsForPostId($post['id']);
+        $pageParams = ['post' => $post, 'author' => $author['username'], 'comments' => $comments];
 
         $this->render('post', $pageParams, 'forum');
     }

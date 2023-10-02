@@ -14,11 +14,10 @@
                     ?>
 
                     <div class="pt-4">
-                        <a class="btn btn-outline-primary btn-sm" href=<?php echo $post['id']; ?>>Read more</a>
+                        <a class="btn btn-outline-primary btn-sm" href=<?php echo "posts/" . $post['id']; ?>>Read
+                            more</a>
                     </div>
                 </div>
-                <!--                <span class="badge bg-primary rounded-pill">-->
-                <?php //echo $post['likes']; ?><!--</span>-->
             </li>
         <?php endforeach; ?>
     </ol>

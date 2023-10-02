@@ -60,7 +60,7 @@ class Router
     function matchRoute()
     {
         $method = $this->request->getMethod();
-        $url = $this->request->getUrl();
+        $url = $this->request->getPath();
         $routes = $this->routes[$method] ?? [];
 
         foreach ($routes as $routeName => $route) {

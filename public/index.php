@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Config\AppConfiguration;
-use App\Controllers\{AuthController, HomeController, PostsController};
+use App\Controllers\{AuthController, CommentsController, HomeController, PostsController};
 use App\Core\Application;
 use App\Middlewares\{AuthRequiredMiddleware,
     FlashMiddleware,
@@ -40,6 +40,10 @@ $app->get('/create-post', [PostsController::class, 'viewCreatePost'], [AuthRequi
 $app->post('/create-post', [PostsController::class, 'createPost'], [AuthRequiredMiddleware::class]);
 $app->get('/my-posts', [PostsController::class, 'viewUserPosts'], [AuthRequiredMiddleware::class]);
 $app->get('/posts/{id}', [PostsController::class, 'viewSinglePost'], [AuthRequiredMiddleware::class]);
+
+// Comments
+$app->get('/comments/delete/{id}', [CommentsController::class, 'deleteComment'], [AuthRequiredMiddleware::class]);
+$app->post('/comments/{post}', [CommentsController::class, 'addComment'], [AuthRequiredMiddleware::class]);
 
 // Run
 $app->run();

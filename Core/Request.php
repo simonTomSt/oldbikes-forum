@@ -49,7 +49,7 @@ class Request
         $query = [];
 
         if (isset($_SERVER['QUERY_STRING'])) {
-            parse_str($_SERVER['QUERY_STRING'], $params);
+            parse_str($_SERVER['QUERY_STRING'], $query);
         }
 
         return $query;
@@ -58,11 +58,6 @@ class Request
     public function getUrlParams(): array
     {
         return $this->routeParams;
-    }
-
-    public function getUrl()
-    {
-        return $_SERVER['REQUEST_URI'] ?? '/404';
     }
 
     public function setUrlParams(array $routeParams): void
