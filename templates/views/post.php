@@ -30,13 +30,15 @@
                     <?php echo $comment['content'] ?>
                 </div>
 
-                <button
-                        type="button"
-                        class="btn btn-sm text-muted mt-3 text-right"
-                        data-bs-toggle="modal"
-                        data-bs-target="#deleteCommentModal">
-                    Delete this comment
-                </button>
+                <?php if ($comment['author_id'] == $globalParams['session']['user']): ?>
+                    <button
+                            type="button"
+                            class="btn btn-sm text-muted mt-3 text-right"
+                            data-bs-toggle="modal"
+                            data-bs-target="#deleteCommentModal">
+                        Delete this comment
+                    </button>
+                <?php endif; ?>
             </li>
 
             <div class="modal"
